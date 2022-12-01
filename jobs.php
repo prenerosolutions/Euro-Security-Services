@@ -17,7 +17,7 @@ include('site_sidebar.php');
             <div class="breadcrumbs-top float-md-right">
               <div class="breadcrumb-wrapper mr-1">
                 <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="index.php">Home</a>
+                  <li class="breadcrumb-item"><a href="dashboard.php">Home</a>
                   </li>
                   <li class="breadcrumb-item active">Jobs
                   </li>
@@ -68,12 +68,24 @@ include('site_sidebar.php');
 								<tr>
 									<th scope="row"><?php echo $jrow['job_id']; ?></th>
 									<td><?php echo $jrow['job_title']; ?></td>
-									<td><?php echo $jrow['site_id']; ?></td>
+									<td><?php
+											 
+											 $site_id=$jrow['site_id']; 
+											$squery=mysqli_query($connect,"SELECT * FROM `sites`");
+										$srow = mysqli_fetch_array($squery);
+										
+										
+										echo $srow['site_title'];
+										
+										
+										
+										
+										?></td>
 									<td><?php echo $jrow['start_time']; ?> - <?php echo $jrow['end_time']; ?></td>
 									<td><?php echo $jrow['job_date']; ?></td>
 									
 									
-									<td><button type="button" class="btn btn-primary btn-min-width mr-1 mb-1"><i class="ft-edit"></i> Edit</button>
+									<td><a href="edit-job.php?job_id=<?php echo $jrow['job_id']; ?>"><button type="button" class="btn btn-primary btn-min-width mr-1 mb-1"><i class="ft-edit"></i> Edit</button></a>
 									<button type="button" class="btn btn-danger btn-min-width mr-1 mb-1"><i class="ft-trash"></i>Delete</button></td>
 								</tr>
 								<?php

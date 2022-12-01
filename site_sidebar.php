@@ -10,7 +10,7 @@
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
           <li class="active"><a href="sites.php"><i class="ft-list"></i><span class="menu-title" data-i18n="">Sites List Team</span></a>
           </li>
-          <li class=" nav-item"><a href="#"><i class="ft-plus"></i><span class="menu-title" data-i18n="">Add New Site </span></a>
+          <li class=" nav-item"><a href="add-site.php"><i class="ft-plus"></i><span class="menu-title" data-i18n="">Add New Site </span></a>
           </li>
 			<li class=" nav-item"><a href="jobs.php"><i class="ft-list"></i><span class="menu-title" data-i18n="">All Jobs </span></a>
           </li>

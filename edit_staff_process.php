@@ -2,8 +2,8 @@
   include "config.php";
   
   
-$emp_code = $_POST['emp_code'];	
-$emp_name = $_POST['emp_name'];
+	$emp_code = $_POST['emp_code'];	
+	$emp_name = $_POST['emp_name'];
 	$email = $_POST['email'];
 	$phone = $_POST['phone'];
 	$password = $_POST['password'];
@@ -27,9 +27,9 @@ $sql = "UPDATE `employee` SET `employee_name`='$emp_name',
 								`per_day_salary`='$pds',
 								`esi`='$esi_num',
 								`esi_per`='$esi',
-								`pf_num`=$pf_num,
-								`pf_per`=$pf,
-								`pan_num`='$pan' WHERE `employee_code`=$emp_code ";
+								`pf_num`='$pf_num',
+								`pf_per`='$pf',
+								`pan_num`='$pan' WHERE `employee_code`='$emp_code' ";
 
 		$results = $connect->query($sql);
 

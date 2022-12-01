@@ -17,7 +17,7 @@ include('site_sidebar.php');
             <div class="breadcrumbs-top float-md-right">
               <div class="breadcrumb-wrapper mr-1">
                 <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="index.php">Home</a>
+                  <li class="breadcrumb-item"><a href="dashboard.php">Home</a>
                   </li>
                   <li class="breadcrumb-item active">Site Locations
                   </li>
@@ -73,20 +73,18 @@ include('site_sidebar.php');
 									<td>
 										
 										
-										<?php echo $nrow['client_id']; ?>
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									
+										<?php
+											// echo $nrow['client_id'];
+											 
+											 $client_id=$nrow['client_id']; 
+											 
+										$cquery=mysqli_query($connect,"SELECT * FROM `clients` WHERE `client_id`='$client_id'");
+										$crow = mysqli_fetch_array($cquery);
+										echo $crow['client_name'];									
+										?>									
 									</td>
 									
-									<td><button type="button" class="btn btn-primary btn-min-width mr-1 mb-1"><i class="ft-edit"></i> Edit</button>
+									<td><a href="edit-site.php?site_id=<?php echo $nrow['site_id']; ?>"><button type="button" class="btn btn-primary btn-min-width mr-1 mb-1"><i class="ft-edit"></i> Edit</button></a>
 									<button type="button" class="btn btn-danger btn-min-width mr-1 mb-1"><i class="ft-trash"></i>Delete</button></td>
 								</tr>
 								<?php

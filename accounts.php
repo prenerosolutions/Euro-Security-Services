@@ -114,12 +114,13 @@ include('sidebar.php');
                                            <!-- <td><?php// echo $crow['salary_amount']; ?> </td> -->
                                             <td>
                                             <?php
-                                            	$costquery=mysqli_query($connect,"select * from `duties` WHERE employee_code = $employeeCode");
-												$salaryAmount = 0;
-												while($salaryrow = mysqli_fetch_array($salaryquery)){
-													$salaryAmount += $salaryrow['guard_cost'];
+												$client_id = $crow['client_id'];
+												$costquery=mysqli_query($connect,"select * from `jobs` WHERE client_id = $client_id");
+												$costAmount = 0;
+												while($costrow = mysqli_fetch_array($costquery)){
+													$costAmount += $costrow['client_cost'];
 												}
-												echo $salaryAmount;
+												echo $costAmount;
 										
 											?>
                                             </td>
