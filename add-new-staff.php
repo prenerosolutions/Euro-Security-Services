@@ -101,11 +101,34 @@ include('workforce_sidebar.php');
                           <small class="text-muted"><i>PAN Number:</i></small>
                           <input type="text" class="form-control" name="pan" placeholder="PAN000000" >
                       </fieldset>
+
+            <fieldset class="form-group">
+                          <small class="text-muted"><i>Category:</i></small>
+                          <select class="form-control" name="empcat_id">
+                            <?php
+                    
+                            $query=mysqli_query($connect,"SELECT * FROM `employee_category`");
+                             while($nrow = mysqli_fetch_array($query)){
+                            ?>
+                            <option value="<?=$nrow['empcat_id']?>"><?=$nrow['empcat_name']?></option>
+                            <?php
+                          }
+                          ?>
+                          </select>
+                      </fieldset>
+
+                     <fieldset class="form-group">
+                          <small class="text-muted"><i>Is Driver</i></small>
+                          <input type="checkbox" class="form-control" name="employee_driver">
+                      </fieldset>
 					  
 					  <fieldset class="form-group">
                           
                           <input type="submit" class="btn btn-bg-gradient-x-blue-cyan" value="Add Member" name="add-staff">
                       </fieldset>
+
+
+
 					  </form>
 					  
 					  

@@ -1,6 +1,22 @@
 <?php
 include('header.php');
 include('sidebar.php');
+
+
+
+if(isset($_GET['client_id']))
+{
+	$client_id=$_GET['client_id'];
+	$month_name=$_GET['month_name'];
+	$monthly_client_cost=$_GET['monthly_client_cost'];
+	$pay_method=$_GET['pay_method'];
+
+	$Q="INSERT INTO `client_cost`(`client_id`, `job_id`, `total_amount`, 	`month`, 		`pay_method`, `date_added`)
+						VALUES ('$client_id', '0', '$monthly_client_cost', '$month_name', '$pay_method', now())";
+	mysqli_query($connect, $Q);
+
+}
+
 ?>
 
     
@@ -103,40 +119,57 @@ include('sidebar.php');
                                     </thead>
                                     <tbody>
 										<?php
-                                    while($crow = mysqli_fetch_array($nquery)){
+										$serial=0;
+										$Q="SELECT client_name, clients.client_id, SUM(jobs.client_cost) as monthly_client_cost, SUBSTRING(job_date,1,7) as month_name
+											FROM `jobs`
+											INNER JOIN sites ON sites.site_id=jobs.site_id
+											INNER JOIN clients ON clients.client_id=sites.client_id
+											GROUP BY clients.client_id, SUBSTRING(job_date,1,7)";
+										$Q=mysqli_query($connect, $Q);
+                                    while($crow = mysqli_fetch_array($Q))
+                                    {
+                                    	$serial++;
 										$client_id = $crow['client_id'];
+										$month_name = $crow['month_name'];
+										$monthly_client_cost = $crow['monthly_client_cost'];
                                     ?>
                                         <tr align="center">
-                                            <td><?php echo $crow['id']; ?></td>
-                                            <td><?php echo $crow['client_id']; ?>
-											
+                                            <td><?php echo $serial;?></td>
+                                            <td><?php echo $crow['client_name']; ?></td>
+											<td>
+                                            	 <?php echo $crow['monthly_client_cost']; ?>
+											</td>
+
+
+											<td>
+                                            	 <?php echo date('M Y', strtotime($crow['month_name'])); ?>
 											</td>
                                            <!-- <td><?php// echo $crow['salary_amount']; ?> </td> -->
                                             <td>
                                             <?php
-												$client_id = $crow['client_id'];
-												$costquery=mysqli_query($connect,"select * from `jobs` WHERE client_id = $client_id");
-												$costAmount = 0;
-												while($costrow = mysqli_fetch_array($costquery)){
-													$costAmount += $costrow['client_cost'];
-												}
-												echo $costAmount;
-										
+												$costquery=mysqli_fetch_assoc(mysqli_query($connect,"select ifnull(count(*),0) as already_paid from client_cost WHERE client_id = $client_id AND month='$month_name'"));
+												$already_paid=$costquery['already_paid']; 
 											?>
-                                            </td>
-                                           
-                                             <td>
-                                            	 <?php echo $crow['pay_month']; ?>
-											</td>
-                                            <td>
                                             	<a href="#">
-												<button class="btn btn-info"> <?php echo $crow['salary_status']; ?></button>
+												<button class="btn btn-info"><?php echo ($already_paid==0) ? 'Un-paid' : 'Paid';?></button>
 												</a>
 											</td>
 												<td>
 													<!--<a href="salary_slip.php?employee_code=<?php //echo $crow['employee_code'];?> && salary=<?php// echo $crow['salary_id']; ?>">-->
+													<?php
+													if($already_paid==0)
+													{ ?>
 													
-													<button class="btn btn-info"><i class="fa fa-add"></i>Generate Salary</button>
+														<a href="accounts.php?post_bill&client_id=<?=$client_id?>&month_name=<?=$month_name?>&monthly_client_cost=<?=$monthly_client_cost?>&pay_method=online"><button class="btn btn-info"><i class="fa fa-add"></i>Online</button></a>
+														<a href="accounts.php?post_bill&client_id=<?=$client_id?>&month_name=<?=$month_name?>&monthly_client_cost=<?=$monthly_client_cost?>&pay_method=cash"><button class="btn btn-info"><i class="fa fa-add"></i>Cash</button></a>
+													
+													<?php 
+													}
+													else
+													{
+														echo 'Already Paid';
+													}
+													?>
 												<!--</a>-->
 												</td>
                                         </tr>

@@ -15,6 +15,9 @@
 	$pf_num = $_POST['pf_num'];
 	$pf = $_POST['pf'];
 	$pan = $_POST['pan'];
+	$empcat_id = $_POST['empcat_id'];
+	isset($_POST['employee_driver']) ? $employee_driver=1 : $employee_driver=0;
+
 	//$status = $_POST['status'];
 	$date = date("Y-m-d h:i:s");
 
@@ -31,7 +34,10 @@ $sql = "INSERT INTO `employee`(
 								`pf_num`, 
 								`pf_per`, 
 								`pan_num`, 
-								`date_added`) VALUES (
+								`date_added`,
+								`empcat_id`,
+								`employee_driver`
+								) VALUES (
 								'$emp_name',
 								'$email',
 								'$phone',
@@ -44,7 +50,10 @@ $sql = "INSERT INTO `employee`(
 								'$pf_num',
 								'$pf',
 								'$pan',
-								'$date')";
+								'$date',
+								'$empcat_id',
+								'$employee_driver'
+							)";
 
 		$result = $connect->query($sql);
 		
